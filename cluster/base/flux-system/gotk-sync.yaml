@@ -8,8 +8,6 @@ spec:
   interval: 1m0s
   ref:
     branch: main
-  secretRef:
-    name: flux-system
   url: https://github.com/justme629/k8s
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
@@ -25,3 +23,7 @@ spec:
     kind: GitRepository
     name: flux-system
   validation: client
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg
