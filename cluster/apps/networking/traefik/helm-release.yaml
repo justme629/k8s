@@ -41,7 +41,7 @@ spec:
       dashboard:
         enabled: false
     globalArguments:
-    - "--global.sendanonymoususage=false
+    - "--global.sendanonymoususage=false"
     - "--serverstransport.insecureskipverify=true"
     - "--providers.kubernetesingress.ingressclass=traefik"
     - "--metrics.prometheus=true"
