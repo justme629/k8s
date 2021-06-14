@@ -11,8 +11,6 @@ spec:
       name: letsencrypt-production
     solvers:
     - dns01:
-        ingress:
-            class: traefik
         cloudflare:
           email: "${SECRET_CLOUDFLARE_EMAIL}"
           apiTokenSecretRef:
