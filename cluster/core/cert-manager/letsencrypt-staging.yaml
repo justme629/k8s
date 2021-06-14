@@ -11,6 +11,8 @@ spec:
       name: letsencrypt-staging
     solvers:
     - dns01:
+        ingress:
+            class: traefik
         cloudflare:
           email: "${SECRET_CLOUDFLARE_EMAIL}"
           apiTokenSecretRef:
