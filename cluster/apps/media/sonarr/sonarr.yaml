@@ -1,0 +1,85 @@
+---
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: sonarr-deployment
+   labels:
+     app: sonarr
+ spec:
+   replicas: 1
+   selector:
+      matchLabels:
+        app: sonarr
+   template:
+     metadata:
+       labels:
+         app: sonarr
+
+     spec:
+      containers:
+         - name: sonarr
+           image: linuxserver/sonarr
+           ports:
+             - containerPort: 8989
+           env:
+           - name: PGID
+             value: "1000"
+           - name: PUID
+             value: "1000"
+           - name: TZ
+             value: 'Asia/Riyadh'
+           volumeMounts:
+             - mountPath: /config
+               name: sonarr-config
+#               subPath: "sonarr"
+             - mountPath: /tv
+               name: sonarr-tv
+#               subPath: "tv"
+             - mountPath: /downloads
+               name: sonarr-download
+#               subPath: "downloads/nzbget"
+             - mountPath: /anime
+               name: sonarr-anime
+
+      volumes:
+        - name: sonarr-config
+          hostPath:
+            path: /home/abdullah/ssd/k8s/sonarr
+#          nfs:
+#            server: share
+#            path: /mnt/pve/config
+##          persistentVolumeClaim:
+##            claimName: sonarr-config
+        - name: sonarr-tv
+          hostPath:
+            path: /tank/video/tv
+#          nfs:
+#            server: share
+#            path: /mnt/pve/media
+##          persistentVolumeClaim:
+##            claimName: sonarr-tv
+        - name: sonarr-download
+          hostPath:
+            path: /tank/downloads/nzbget
+        - name: sonarr-anime
+          hostPath:
+            path: /tank/video/anime
+#          nfs:
+#            server: share
+#            path: /mnt/pve/media
+##          persistentVolumeClaim:
+##            claimName: sonarr-download
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: sonarr
+spec:
+  selector:
+    app: sonarr
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8989
+  type:  ClusterIP

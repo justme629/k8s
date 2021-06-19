@@ -1,0 +1,77 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nzbhydra2
+#  namespace: media
+spec:
+  releaseName: nzbhydra2
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: nzbhydra2
+      version: 8.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/nzbhydra2
+      tag: v3.14.2
+    env:
+      TZ: "Asia/Riyadh"
+    probes:
+      startup:
+        enabled: true
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "nginx"
+      hosts:
+      - host: "nzbhydra.${SECRET_DOMAIN}"
+        paths:
+        - path: /
+          pathType: Prefix
+      tls:
+      - hosts:
+        - "nzbhydra.${SECRET_DOMAIN}"
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+      supplementalGroups:
+      - 100
+      - 568
+    persistence:
+      config:
+        enabled: true
+#        hostPath: /home/abdullah/ssd/k8s/nzbhydra
+#        mountPath: /config
+ #       accessMode: ReadWriteOnce
+        existingClaim: media-ssd
+        subPath: nzbhydra
+        accessMode: ReadWriteMany
+#      nzbhydra-data:
+#        enabled: true
+#        readOnly: false
+#        type: hostPath
+#        hostPath: /tank/downloads/nzbhydra
+#        mountPath: /data/downloads
+#        accessMode: ReadWriteMany
+#    additionalVolumeMounts:
+#    - name: nzbhydra-data
+#      mountPath: "/data"
+#    additionalVolumes:
+#    - name: nzbhydra-data
+#      hostPath:
+#        path: /tank/downloads/nzbhydra
+    resources:
+      requests:
+        memory: 250Mi
+        cpu: 500m
+      limits:
+        memory: 1500Mi

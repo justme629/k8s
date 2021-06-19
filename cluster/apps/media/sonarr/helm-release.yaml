@@ -1,0 +1,99 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sonarr
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: sonarr
+      version: 12.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/sonarr
+      tag: v3.0.6.1196
+    env:
+      TZ: "Asia/Riyadh"
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+#        annotations:
+#          nginx.ingress.kubernetes.io/auth-url: "http://authelia.networking.svc.cluster.local/api/verify"
+#          nginx.ingress.kubernetes.io/auth-signin: "https://login.${SECRET_DOMAIN}/"
+#          nginx.ingress.kubernetes.io/configuration-snippet: |
+#            proxy_set_header Accept-Encoding "";
+#            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://gilbn.github.io/theme.park/CSS/themes/sonarr/space-gray.css"></head>';
+#            sub_filter_once on;
+        hosts:
+        - host: "sonarr.${SECRET_DOMAIN}"
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - "sonarr.${SECRET_DOMAIN}"
+      api:
+        enabled: true
+        ingressClassName: "nginx"
+        hosts:
+        - host: "sonarr.${SECRET_DOMAIN}"
+          paths:
+          - path: /api
+            pathType: Prefix
+        tls:
+        - hosts:
+          - "sonarr.${SECRET_DOMAIN}"
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+#      fsGroup: 1000
+#      fsGroupChangePolicy: OnRootMismatch
+      supplementalGroups:
+      - 100
+      - 568
+    persistence:
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /home/abdullah/ssd/k8s/sonarr
+        mountPath: /config
+        accessMode: ReadWriteOnce
+      media:
+        enabled: true
+        readOnly: false
+        type: hostPath
+        hostPath: /tank/video/
+#        mountPath: /movies
+        accessMode: ReadWriteMany
+      sonarr-download:
+        enabled: true
+        readOnly: false
+        type: hostPath
+        hostPath: /tank/downloads/nzbget
+        mountPath: /downloads
+        accessMode: ReadWriteMany
+#      sonarr-tv:
+#        enabled: true
+#        type: hostPath
+#        hostPath: /tank/video/tv
+#        mountPath: /tv
+#      sonarr-anime:
+#        enabled: true
+#        type: hostPath
+#        hostPath: /tank/video/anime
+#        mountPath: /anime
+    resources:
+      requests:
+        memory: 500Mi
+        cpu: 1000m
+      limits:
+        memory: 2000Mi

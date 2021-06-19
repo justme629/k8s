@@ -1,0 +1,69 @@
+---
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: nzbget-deployment
+   labels:
+     app: nzbget
+ spec:
+   replicas: 1
+   selector:
+      matchLabels:
+        app: nzbget
+   template:
+     metadata:
+       labels:
+         app: nzbget
+
+     spec:
+      containers:
+         - name: nzbget
+           image: linuxserver/nzbget
+           ports:
+             - containerPort: 6789
+           env:
+           - name: PGID
+             value: "1000"
+           - name: PUID
+             value: "1000"
+           - name: TZ
+             value: 'Asia/Riyadh'
+           volumeMounts:
+             - mountPath: /config
+               name: nzbget-config
+#               subPath: "nzbget"
+             - mountPath: /downloads
+               name: nzbget-downloads
+#               subPath: "downloads/nzbget"
+      volumes:
+        - name: nzbget-config
+          hostPath:
+            path: /home/abdullah/ssd/k8s/nzbget
+#          nfs:
+#            server: share
+#            path: /mnt/pve/config
+##          persistentVolumeClaim:
+##           claimName: nzbget-config-pvc
+        - name: nzbget-downloads
+          hostPath:
+            path: /tank/downloads/nzbget
+##          nfs:
+##            server: share
+##            path: /tank/media/downloads/nzbget
+#          persistentVolumeClaim:
+#            claimName: nfs-media-pvc
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nzbget
+spec:
+  selector:
+    app: nzbget
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 6789
+  type: ClusterIP
+#  loadBalancerIP: 192.168.1.120

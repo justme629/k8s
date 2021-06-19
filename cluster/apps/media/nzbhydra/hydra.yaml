@@ -1,0 +1,57 @@
+---
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: hydra-deployment
+   labels:
+     app: hydra
+ spec:
+   replicas: 1
+   selector:
+      matchLabels:
+        app: hydra
+   template:
+     metadata:
+       labels:
+         app: hydra
+
+     spec:
+      containers:
+         - name: hydra
+           image: linuxserver/nzbhydra2:latest
+           ports:
+             - containerPort: 5076
+           env:
+           - name: PGID
+             value: "1000"
+           - name: PUID
+             value: "1000"
+           - name: TZ
+             value: 'Asia/Riyadh'
+           volumeMounts:
+             - mountPath: /config
+               name: hydra-config
+             - mountPath: /data/downloads
+               name: hydra-data
+
+      volumes:
+        - name: hydra-config
+          hostPath:
+            path: /home/abdullah/ssd/k8s/hydra
+        - name: hydra-data
+          hostPath:
+            path: /tank/downloads/hydra2
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: hydra
+spec:
+  selector:
+    app: hydra
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 5076
+  type:  ClusterIP

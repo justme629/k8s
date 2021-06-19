@@ -1,0 +1,83 @@
+---
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: radarr
+   labels:
+     app: radarr
+ spec:
+   replicas: 1
+   selector:
+      matchLabels:
+        app: radarr
+   template:
+     metadata:
+       labels:
+         app: radarr
+
+     spec:
+      containers:
+         - name: radarr
+           image: linuxserver/radarr
+           ports:
+             - containerPort: 7878
+           env:
+           - name: PGID
+             value: "1000"
+           - name: PUID
+             value: "1000"
+           - name: TZ
+             value: 'Asia/Riyadh'
+           volumeMounts:
+             - mountPath: /config
+               name: radarr-config
+#               subPath: "radarr"
+             - mountPath: /downloads
+               name: radarr-downloads
+#               subPath: "downloads/nzbget"
+             - mountPath: /movies
+               name: radarr-movies
+#               subPath: "movies"
+      volumes:
+        - name: radarr-config
+          hostPath:
+            path: /home/abdullah/ssd/k8s/radarr
+##          nfs:
+##            server: share
+##            path: /mnt/pve/config
+#          persistentVolumeClaim:
+#            claimName: nfs-media-pvc
+        - name: radarr-downloads
+          hostPath:
+            path: /tank/downloads/nzbget
+##          nfs:
+##            server: share
+##            path: /mnt/pve/media
+#          persistentVolumeClaim:
+#            claimName: nfs-media-pvc
+        - name: radarr-movies
+          hostPath:
+            path: /tank/video/movies
+ ##         nfs:
+   ##         server: share
+##            path: /mnt/pve/media
+#          persistentVolumeClaim:
+#            claimName: nfs-media-pvc
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: radarr
+spec:
+  selector:
+    app: radarr
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 7878
+  type: ClusterIP
+#  externalTrafficPolicy: Cluster
+#ClusterIP
+#  loadBalancerIP: 192.168.1.231
+#  loadBalancerIP: 192.168.1.123
