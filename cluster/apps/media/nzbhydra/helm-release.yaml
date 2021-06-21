@@ -28,8 +28,10 @@ spec:
         enabled: true
     ingress:
       enabled: true
+      ingressClassName: "traefik"
       annotations:
-        kubernetes.io/ingress.class: "nginx"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
       hosts:
       - host: "nzbhydra.${SECRET_DOMAIN}"
         paths:
