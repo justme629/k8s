@@ -11,3 +11,7 @@ resources:
 - stakater-charts.yaml
 - prometheus-community-charts.yaml
 - infracloudio-charts.yaml
+- node-feature-discovery-charts.yaml
+- kubernetes-sigs-descheduler-charts.yaml
+- lwolf-charts.yaml
+- weaveworks-kured-charts.yaml
