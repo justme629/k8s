@@ -15,7 +15,8 @@ spec:
     - name: api@internal
       kind: TraefikService
     middlewares:
-    - name: rfc1918
+#    - name: rfc1918
+    - name: traefik-sso
   tls:
     secretName: "${SECRET_DOMAIN}-tls"
 
