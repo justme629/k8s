@@ -5,4 +5,4 @@ resources:
 - networking
 - system-upgrade
 - kube-system
-#- media
+- media
