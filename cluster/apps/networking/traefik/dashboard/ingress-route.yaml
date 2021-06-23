@@ -34,7 +34,7 @@ spec:
     kind: Rule
     services:
     - name: traefik-forward-auth
-      namespace: traefik
+      namespace: networking
       port: 4181
     middlewares:
     - name: traefik-sso
