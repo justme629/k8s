@@ -56,7 +56,8 @@ spec:
         secretKeyRef:
           name: traefik-forward-auth-secrets
           key: AUTH_HOST
-#    - name: URL_PATH
+    - name: URL_PATH
+      value: /_oauth
 #      valueFrom:
 #        secretKeyRef:
 #          name: cluster-secrets
@@ -76,8 +77,8 @@ spec:
         secretKeyRef:
           name: traefik-forward-auth-secrets
           key: EMAIL
-    serviceAccount:
-      create: false
+#    serviceAccount:
+#      create: false
     service:
       type: ClusterIP
       port: 4181
