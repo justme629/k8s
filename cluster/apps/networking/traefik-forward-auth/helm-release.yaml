@@ -13,7 +13,7 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: traefik-forward-auth
-      version: 1.0.10
+      version: 1.0.5
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
@@ -28,25 +28,54 @@ spec:
     logging:
       level: info
       format: text
-    authHost: "auth.$SECRET_DOMAIN"
-    restrictions:
-      whitelist: "$WHITELIST"
-    cookie:
-      domain: "$SECRET_DOMAIN"
-      secret: "$OAUTH_SECRET"
-    
     providers:
       google:
         enabled: true
-    # providers.google.clientId -- Client ID
-        clientId: "$OAUTH_CLIENT_ID"
-    # providers.google.clientSecret -- Client Secret
-        clientSecret: "OAUTH_CLIENT_SECRET"
 #    podAnnotations:
 #      secret.reloader.stakater.com/reload: cluster-secrets
     env:
     - name: TZ
       value: Asia/Riyadh
+    - name: PROVIDERS_GOOGLE_CLIENT_ID
+      valueFrom:
+        secretKeyRef:
+          name: traefik-forward-auth-secrets
+          key: CLIENT_ID
+    - name: PROVIDERS_GOOGLE_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: traefik-forward-auth-secrets
+          key: CLIENT_SECRET
+    - name: SECRET
+      valueFrom:
+        secretKeyRef:
+          name: traefik-forward-auth-secrets
+          key: SECRET
+    - name: AUTH_HOST
+      valueFrom:
+        secretKeyRef:
+          name: traefik-forward-auth-secrets
+          key: AUTH_HOST
+#    - name: URL_PATH
+#      valueFrom:
+#        secretKeyRef:
+#          name: cluster-secrets
+#          key: URL_PATH
+    - name: COOKIE_DOMAIN
+      valueFrom:
+        secretKeyRef:
+          name: traefik-forward-auth-secrets
+          key: COOKIE_DOMAIN
+    - name: DOMAIN
+      valueFrom:
+        secretKeyRef:
+          name: traefik-forward-auth-secrets
+          key: DOMAIN
+    - name: WHITELIST
+      valueFrom:
+        secretKeyRef:
+          name: traefik-forward-auth-secrets
+          key: EMAIL
     serviceAccount:
       create: false
     service:
@@ -54,4 +83,3 @@ spec:
       port: 4181
     ingress:
       enabled: false
-
