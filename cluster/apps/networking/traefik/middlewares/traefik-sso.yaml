@@ -9,3 +9,14 @@ spec:
     address: http://traefik-forward-auth:4181
     authResponseHeaders:
     - X-Forwarded-User
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: sso
+  namespace: networking
+spec:
+  chain:
+    middlewares:
+    - name: traefik-sso
+#    - name: default-headers
