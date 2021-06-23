@@ -41,7 +41,7 @@ spec:
           - "radarr.${SECRET_DOMAIN}"
       api:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "traefik"
         hosts:
         - host: "radarr.${SECRET_DOMAIN}"
           paths:

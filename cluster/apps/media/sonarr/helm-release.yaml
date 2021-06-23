@@ -39,7 +39,7 @@ spec:
           - "sonarr.${SECRET_DOMAIN}"
       api:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "traefik"
         hosts:
         - host: "sonarr.${SECRET_DOMAIN}"
           paths:
