@@ -47,11 +47,6 @@ spec:
     env:
     - name: TZ
       value: Asia/Riyadh
-    - name: DOMAIN
-      valueFrom:
-        secretKeyRef:
-          name: cluster-secrets
-          key: SECRET_DOMAIN
     serviceAccount:
       create: false
     service:
