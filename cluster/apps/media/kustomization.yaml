@@ -11,4 +11,4 @@ resources:
 #- transmission
 - overseerr
 - plex
-- prowlarr
+#- prowlarr

@@ -38,6 +38,9 @@ spec:
         tls:
         - hosts:
           - "prowlarr.${SECRET_DOMAIN}"
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
     persistence:
       config:
         enabled: true
