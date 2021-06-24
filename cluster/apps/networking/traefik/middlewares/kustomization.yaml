@@ -7,3 +7,4 @@ resources:
 - secret.enc.yaml
 - basic-auth.yaml
 - traefik-sso.yaml
+- nextcloud.yaml

@@ -15,3 +15,4 @@ resources:
 - kubernetes-sigs-descheduler-charts.yaml
 - lwolf-charts.yaml
 - weaveworks-kured-charts.yaml
+- nextcloud-charts.yaml
