@@ -26,17 +26,24 @@ spec:
 
     persistence:
       enabled: true
-      existingClaim: nextcloud-data
-
+    #  existingClaim: nextcloud-data
+      type: hostPath
+      hostPath: /home/abdullah/ssd/k8s/nextcloud
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
     ingress:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: traefik
-        cert-manager.io/cluster-issuer: letsencrypt-production
+#        cert-manager.io/cluster-issuer: letsencrypt-production
 #        external-dns/is-public: "true"
 #        external-dns.alpha.kubernetes.io/target: ingress.${SECRET_DOMAIN}
 #        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.middlewares: networking-nextcloud@kubernetescrd
+
       tls:
 #      - secretName: tls.nextcloud
         hosts:
@@ -86,4 +93,6 @@ spec:
 
       persistence:
         enabled: true
-        existingClaim: nextcloud-postgresql
+#        existingClaim: nextcloud-postgresql
+        type: hostPath
+        hostPath: /home/abdullah/ssd/k8s/nextcloud-postgresql
