@@ -27,8 +27,11 @@ spec:
     persistence:
       enabled: true
     #  existingClaim: nextcloud-data
-      type: hostPath
-      hostPath: /home/abdullah/ssd/k8s/nextcloud
+      existingClaim: media-ssd
+      subPath: nextcloud
+      accessMode: ReadWriteMany
+#      type: hostPath
+#      hostPath: /home/abdullah/ssd/k8s/nextcloud
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
@@ -94,5 +97,8 @@ spec:
       persistence:
         enabled: true
 #        existingClaim: nextcloud-postgresql
-        type: hostPath
-        hostPath: /home/abdullah/ssd/k8s/nextcloud-postgresql
+        existingClaim: media-ssd
+        subPath: nextcloud-postgresql
+        accessMode: ReadWriteMany
+#        type: hostPath
+#        hostPath: /home/abdullah/ssd/k8s/nextcloud-postgresql
