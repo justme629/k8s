@@ -35,8 +35,9 @@ spec:
       fsGroup: 1000
     ingress:
       enabled: true
+      ingressClassName: "traefik"
       annotations:
-        kubernetes.io/ingress.class: traefik
+#        kubernetes.io/ingress.class: traefik
 #        cert-manager.io/cluster-issuer: letsencrypt-production
 #        external-dns/is-public: "true"
 #        external-dns.alpha.kubernetes.io/target: ingress.${SECRET_DOMAIN}
@@ -45,9 +46,8 @@ spec:
         traefik.ingress.kubernetes.io/router.middlewares: networking-nextcloud@kubernetescrd
 
       tls:
-#      - secretName: tls.nextcloud
-        hosts:
-        - nextcloud.${SECRET_DOMAIN}
+        - hosts:
+          - nextcloud.${SECRET_DOMAIN}
 
     resources:
       requests:
