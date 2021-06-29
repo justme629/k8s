@@ -24,9 +24,9 @@ spec:
     env:
       PHP_MEMORY_LIMIT: 256M
 
-    persistence:
-      enabled: true
-      existingClaim: nextcloud-data
+#    persistence:
+#      enabled: true
+#      existingClaim: nextcloud-data
  #     existingClaim: media-ssd
  #     subPath: nextcloud
  #     accessMode: ReadWriteMany
@@ -84,6 +84,10 @@ spec:
         accessMode: ReadWriteMany
     internalDatabase:
       enabled: false
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
 
     externalDatabase:
       enabled: true
