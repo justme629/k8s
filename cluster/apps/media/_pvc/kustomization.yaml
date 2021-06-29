@@ -6,3 +6,5 @@ resources:
 - media.persistentvolume.yml
 - media.persistentvolumeclaim.yml
 - nfs-documents.yaml
+- nextcloud-data.yaml
+- postgresql-data.yaml
