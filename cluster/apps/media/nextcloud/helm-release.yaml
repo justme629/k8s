@@ -66,7 +66,7 @@ spec:
       extraVolumes:
         - name: nfs-data
           persistentVolumeClaim:
-            claimName: media-nfs-documents-pvc
+            claimName: nfs-documents-pvc
       extraVolumeMounts:
         - name: nfs-documents
           mountPath: /nfs/documents
