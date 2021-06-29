@@ -5,3 +5,4 @@ resources:
 - nfs-downloads.yaml
 - media.persistentvolume.yml
 - media.persistentvolumeclaim.yml
+- nfs-documents.yaml
