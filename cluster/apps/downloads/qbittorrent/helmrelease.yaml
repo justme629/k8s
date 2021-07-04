@@ -45,8 +45,8 @@ spec:
     persistence:
       config:
         enabled: true
-#        existingClaim: qbittorrent-config
-        existingClaim: media-ssd
+        existingClaim: qbittorrent-config
+#        existingClaim: media-ssd
 
       media:
         enabled: true
