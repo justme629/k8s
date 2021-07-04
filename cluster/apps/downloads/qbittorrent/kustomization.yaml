@@ -4,3 +4,4 @@ resources:
 - helmrelease.yaml
 #- volume.yaml
 - nas-media.yaml
+- config-pvc.yaml
