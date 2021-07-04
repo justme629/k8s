@@ -6,3 +6,5 @@ resources:
 - system-upgrade
 - kube-system
 - media
+- vpn
+- downloads
