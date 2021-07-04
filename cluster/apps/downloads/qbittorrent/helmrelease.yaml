@@ -31,12 +31,12 @@ spec:
       setGateway: "true"
 
     podSecurityContext:
-      supplementalGroups:
-      - 65539
-      - 1000
       runAsUser: 1000
       runAsGroup: 1000
       fsGroup: 1000
+      supplementalGroups:
+      - 65539
+      - 1000
     settings:
       automaticPortSetup: true
 
@@ -47,7 +47,11 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: qbittorrent-config
+#        existingClaim: qbittorrent-config
+        type: hostPath
+        hostPath: /home/abdullah/ssd/k8s/qbittorrent
+        mountPath: /config
+        accessMode: ReadWriteOnce
 #        existingClaim: media-ssd
 
       media:
