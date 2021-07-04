@@ -68,7 +68,7 @@ spec:
           - path: /
         tls:
 #        - secretName: tls.qbittorrent
-          hosts:
+        - hosts:
           - qbittorrent.${SECRET_DOMAIN}
 
     resources:
