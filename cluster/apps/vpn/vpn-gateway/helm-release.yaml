@@ -81,6 +81,7 @@ spec:
             repository: dperson/openvpn-client
             tag: latest
             pullPolicy: IfNotPresent
+          authSecret: vpn-gateway-vpnconfig
 
         securityContext:
           runAsUser: 568
