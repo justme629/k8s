@@ -31,9 +31,9 @@ spec:
       setGateway: "true"
 
     podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
+#      runAsUser: 1000
+#      runAsGroup: 1000
+#      fsGroup: 1000
       supplementalGroups:
       - 65539
       - 1000
@@ -42,7 +42,7 @@ spec:
 
     env:
       TZ: "Asia/Riyadh"
-#      UMASK: "022"
+      UMASK: "022"
 #    service:
 #      bittorrent:
 #        enabled: true

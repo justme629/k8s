@@ -7,4 +7,4 @@ resources:
 - kube-system
 - media
 - vpn
-#- downloads
+- downloads
