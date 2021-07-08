@@ -85,8 +85,8 @@ spec:
         configFileSecret: vpn-gateway-vpnconfig
 
         securityContext:
-          runAsUser: 568
-          runAsGroup: 568
+          runAsUser: 0
+          runAsGroup: 0
 
         env:
           TZ: "Asia/Riyadh"
