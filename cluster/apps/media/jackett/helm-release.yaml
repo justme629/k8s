@@ -41,6 +41,12 @@ spec:
       config:
         enabled: true
         existingClaim: jackett-config-v1
+      torrentblackhole:
+        enabled: true
+        mountPath: /downloads
+        existingClaim: nfs-video-pvc
+        subPath: blackhole
+
     resources:
       requests:
         memory: 100Mi
