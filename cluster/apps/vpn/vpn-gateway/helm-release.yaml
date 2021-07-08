@@ -61,7 +61,7 @@ spec:
         command:
         - sh
         - -c
-        - if [ $(wget -q -O- https://ipinfo.io/country) == '${VPN_COUNTRY}' ]; then exit 0; else exit $?; fi
+        - if [ $(wget -q -O- https://ipinfo.io/country) == SA ]; then exit 0; else exit $?; fi
       initialDelaySeconds: 30
       periodSeconds: 60
       failureThreshold: 1
@@ -82,6 +82,7 @@ spec:
             tag: latest
             pullPolicy: IfNotPresent
           authSecret: vpn-gateway-vpnconfig
+        configFileSecret: vpn-gateway-vpnconfig
 
         securityContext:
           runAsUser: 568
@@ -92,7 +93,7 @@ spec:
           IPTABLES_BACKEND: nft
           KILLSWITCH: "false"
 
-        configFileSecret: vpn-gateway-vpnconfig
+#        configFileSecret: vpn-gateway-vpnconfig
 
         resources:
           requests:
