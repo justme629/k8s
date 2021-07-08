@@ -111,7 +111,7 @@ spec:
             ports:
             # VPN traffic port - change if your provider uses a different port
             - port: 443
-              protocol: tcp
+              protocol: TCP
           - to:
               # Allow traffic within K8S - change if your K8S cluster uses a different CIDR
             - ipBlock:
