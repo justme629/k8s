@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "jackett-config-v1"
+  labels:
+    type: "local"
+spec:
+  storageClassName: "manual"
+  capacity:
+    storage: "20Gi"
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/home/abdullah/ssd/k8s/jackett"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: "media"
+  name: "jackett-config-v1"
+spec:
+  storageClassName: "manual"
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: "20Gi"
