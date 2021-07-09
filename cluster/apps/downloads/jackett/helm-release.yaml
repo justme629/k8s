@@ -44,7 +44,7 @@ spec:
       torrentblackhole:
         enabled: true
         mountPath: /downloads
-        existingClaim: nfs-video-pvc
+        existingClaim: nfs-video-pvc-downloads
         subPath: blackhole
 
     resources:
