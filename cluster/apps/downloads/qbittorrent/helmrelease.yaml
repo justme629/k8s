@@ -43,16 +43,16 @@ spec:
     env:
       TZ: "Asia/Riyadh"
       UMASK: "022"
-#    service:
-#      bittorrent:
-#        enabled: true
-#        type: ClusterIP
-#        ports:
-#          bittorrent:
-#            enabled: true
-#            port: 18289
-#            protocol: TCP
-#            targetPort: 18289
+    service:
+      bittorrent:
+        enabled: true
+        type: ClusterIP
+        ports:
+          bittorrent:
+            enabled: true
+            port: 18289
+            protocol: TCP
+            targetPort: 18289
 
     persistence:
       config:
