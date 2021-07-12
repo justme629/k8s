@@ -30,13 +30,14 @@ spec:
     podAnnotations:
       setGateway: "true"
 
-#    podSecurityContext:
+    podSecurityContext:
 #      runAsUser: 1000
 #      runAsGroup: 1000
 #      fsGroup: 1000
-#      supplementalGroups:
-#      - 65539
-#      - 568
+      supplementalGroups:
+      - 65539
+      - 1000
+      - 568
     settings:
       automaticPortSetup: true
 
@@ -68,13 +69,10 @@ spec:
         enabled: true
         existingClaim: nfs-nas-media
         mountPath: /data/nas-media
-    podSecurityContext:
+    SecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
 #      fsGroup: 1000
-      supplementalGroups:
-      - 65539
-      - 568
 
     ingress:
       main:
